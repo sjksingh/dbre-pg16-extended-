@@ -22,7 +22,23 @@ The SQL script sets up three distinct databases, each tailored for specific demo
 3.  **Connect to each database sequentially and run the corresponding sections of the main SQL script.**
     For example, to set up the `partitioning_test` database:
     ```bash
-    
+$ docker exec -it pg16-extended bash
+   psql -U postgres
+postgres=# \l
+                                                          List of databases
+       Name        |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+-------------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ analytical        | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ json_demo         | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ partitioning_test | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres          | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0         | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+                   |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1         | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+                   |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(6 rows)
+
+postgres=#
     ```
 
 ## Database Details

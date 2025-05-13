@@ -20,26 +20,18 @@ The SQL script sets up three distinct databases, each tailored for specific demo
     CREATE DATABASE json_demo;
     ```
 3.  **Connect to each database sequentially and run the corresponding sections of the main SQL script.**
-    For example, to set up the `partitioning_test` database:
+    You will need to execute the SQL commands relevant to each database context.
+    For example, using `psql`:
     ```bash
-$ docker exec -it pg16-extended bash
-   psql -U postgres
-postgres=# \l
-                                                          List of databases
-       Name        |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
--------------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
- analytical        | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
- json_demo         | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
- partitioning_test | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
- postgres          | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
- template0         | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
-                   |          |          |                 |            |            |            |           | postgres=CTc/postgres
- template1         | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
-                   |          |          |                 |            |            |            |           | postgres=CTc/postgres
-(6 rows)
-
-postgres=#
+    psql -U your_user -d your_database_name -f path_to_your_sql_script.sql
     ```
+    Alternatively, you can copy and paste the relevant SQL sections for each database (`partitioning_test`, `analytical`, `json_demo`) directly into an active `psql` session after connecting to the appropriate database using `\connect database_name`.
+
+4.  **Ensure all listed extensions are available in your PostgreSQL installation.** If not, you may need to install them. For example, on Debian/Ubuntu:
+    ```bash
+    sudo apt-get install postgresql-16-partman postgresql-16-cron postgresql-16-vector ... # and other extensions as needed
+    ```
+    The exact package names might vary based on your OS and PostgreSQL distribution.
 
 ## Database Details
 
@@ -71,7 +63,7 @@ This database is designed to showcase table partitioning and the utility of seve
 
 This database demonstrates a typical data warehouse setup using a star schema.
 
-* **Extensions Used**: Similar to `partitioning_test` (excluding `pg_cron` specific setup in this script, but it can be used).
+* **Extensions Used**: Similar to `partitioning_test`.
     * `pg_partman`, `vector`, `bloom`, `hstore`, `postgres_fdw`, `pgcrypto`, `pg_stat_statements`.
 * **Dimension Tables**:
     * `dim_dates`: Stores date-related attributes (day of week, month, quarter, year, holiday flag).
@@ -123,10 +115,10 @@ This database is set up to compare and contrast a normalized relational model wi
     * For `analytical`: Use `SELECT dbre_generate_high_volume_data();`
     * For `json_demo`: Use `SELECT dbre_populate_orders_demo(...);`
 3.  **Exploration**:
-    * Examine table structures (`\d table_name`).
+    * Examine table structures (`\d table_name` in `psql`).
     * Query the data in each database.
-    * Analyze query plans (`EXPLAIN ANALYZE SELECT ...`).
-    * Explore `pg_partman`'s control tables (e.g., `partman.part_config`).
+    * Analyze query plans (`EXPLAIN ANALYZE SELECT ...` in `psql`).
+    * Explore `pg_partman`'s control tables (e.g., `SELECT * FROM partman.part_config;`).
     * Test the performance of queries on normalized vs. JSONB tables in `json_demo`.
     * Schedule jobs using `pg_cron` if configured.
 

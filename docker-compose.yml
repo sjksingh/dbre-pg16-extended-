@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: sjksingh/dbre-postgres16-extended:latest
+    container_name: pg16-extended
+    environment:
+      POSTGRES_PASSWORD: manager
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]

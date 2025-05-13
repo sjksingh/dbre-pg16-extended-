@@ -23,15 +23,10 @@ The SQL script sets up three distinct databases, each tailored for specific demo
     You will need to execute the SQL commands relevant to each database context.
     For example, using `psql`:
     ```bash
-    psql -U your_user -d your_database_name -f path_to_your_sql_script.sql
+     docker exec -it pg16-extended bash
     ```
     Alternatively, you can copy and paste the relevant SQL sections for each database (`partitioning_test`, `analytical`, `json_demo`) directly into an active `psql` session after connecting to the appropriate database using `\connect database_name`.
 
-4.  **Ensure all listed extensions are available in your PostgreSQL installation.** If not, you may need to install them. For example, on Debian/Ubuntu:
-    ```bash
-    sudo apt-get install postgresql-16-partman postgresql-16-cron postgresql-16-vector ... # and other extensions as needed
-    ```
-    The exact package names might vary based on your OS and PostgreSQL distribution.
 
 ## Database Details
 

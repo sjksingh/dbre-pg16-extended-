@@ -22,14 +22,8 @@ The SQL script sets up three distinct databases, each tailored for specific demo
 3.  **Connect to each database sequentially and run the corresponding sections of the main SQL script.**
     For example, to set up the `partitioning_test` database:
     ```bash
-    psql -U your_user -d partitioning_test -f your_script_file.sql (or relevant section)
+    
     ```
-    You will need to modify `your_script_file.sql` or copy-paste sections into `psql` corresponding to each database context switch (`\connect database_name`).
-4.  **Ensure all listed extensions are available in your PostgreSQL installation.** If not, you may need to install them. For example, on Debian/Ubuntu:
-    ```bash
-    sudo apt-get install postgresql-16-partman postgresql-16-cron postgresql-16-vector ...
-    ```
-    The exact package names might vary based on your OS and PostgreSQL distribution.
 
 ## Database Details
 
